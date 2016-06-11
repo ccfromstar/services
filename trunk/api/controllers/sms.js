@@ -7,8 +7,8 @@ exports.sendSMS = function (_mobile,_content){
 var post_data = {  
     action: "send",  
     userid: 165,
-    account: "hywl",
-    password: "hywl1104",
+    account: "",
+    password: "",
     mobile:Number(_mobile),
     content:_content,
     sendTime:"",
