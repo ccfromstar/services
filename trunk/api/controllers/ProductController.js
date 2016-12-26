@@ -227,8 +227,8 @@ module.exports = {
       where += " AND ship_id in (SELECT s.id FROM cruise_ship s, cruise_company c WHERE c.id=" + params.cruiseCompany + " AND s.company_id=c.id)";
     }
 
-    var sql = "SELECT DISTINCT(p.id), DATE_FORMAT(p.start_date, '%Y-%m-%d') AS startDate, p.title, ts.location AS startLocation, p.price, p.cruiseArea " +
-    " FROM ( SELECT MIN(pp.price) AS price, p1.id, p1.start_date, p1.title, a.txtCruiseArea AS cruiseArea FROM ( select id, start_date, title, cruise_area_id FROM product WHERE status_id = 3 AND start_date > CURDATE() " + where + " ) AS p1 LEFT JOIN product_position pp ON p1.id = pp.product_id LEFT JOIN cruise_area a ON p1.cruise_area_id=a.id GROUP BY p1.id) AS p " +
+    var sql = "SELECT DISTINCT(p.id), DATE_FORMAT(p.start_date, '%Y-%m-%d') AS startDate, p.title, p.productfeature, ts.location AS startLocation, p.price, p.cruiseArea " +
+    " FROM ( SELECT MIN(pp.price) AS price, p1.id, p1.productfeature, p1.start_date, p1.title, a.txtCruiseArea AS cruiseArea FROM ( select id, start_date, title, cruise_area_id, productfeature FROM product WHERE status_id = 3 AND start_date > CURDATE() " + where + " ) AS p1 LEFT JOIN product_position pp ON p1.id = pp.product_id LEFT JOIN cruise_area a ON p1.cruise_area_id=a.id GROUP BY p1.id) AS p " +
     " LEFT JOIN (SELECT product_id, day_number, location FROM travel_schedule WHERE day_number = 1) AS ts ON p.id = ts.product_id " +
     " LEFT JOIN product_position pp ON p.id = pp.product_id ";
     sails.log(sql);
